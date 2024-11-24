@@ -1,13 +1,14 @@
 <template>
   <div class="container mt-4">
-      <h1>Danh sách đơn hàng</h1>
-      <router-link to="/orders/add" class="btn btn-primary">Thêm đơn hàng</router-link>
-
+    <h1>Danh sách đơn hàng</h1>
     <table class="table table-striped">
-      <thead>
+      <thead class="table-dark">
         <tr>
           <th>#</th>
+          <th>Tên đơn hàng</th>
           <th>Khách hàng</th>
+          <th>Địa chỉ</th>
+          <th>Số điện thoại</th>
           <th>Ngày đặt</th>
           <th>Tổng tiền</th>
           <th>Trạng thái</th>
@@ -17,47 +18,49 @@
       <tbody>
         <tr v-for="order in orders" :key="order.id">
           <td>{{ order.id }}</td>
+          <td>{{ order.orderName }}</td>
           <td>{{ order.customerName }}</td>
+          <td>{{ order.address }}</td>
+          <td>{{ order.phone }}</td>
           <td>{{ order.orderDate }}</td>
-          <td>{{ order.total }} VND</td>
+          <td>{{ formatCurrency(order.total) }}</td>
           <td>{{ order.status }}</td>
           <td>
-            <router-link :to="`/orders/${order.id}`" class="btn btn-info btn-sm">Xem</router-link>
-            <router-link :to="`/orders/edit/${order.id}`" class="btn btn-warning btn-sm">Sửa</router-link>
-            <button class="btn btn-danger btn-sm" @click="deleteOrder(order.id)">Xóa</button>
+            <router-link :to="'/orders/' + order.id" class="btn btn-info">Xem</router-link>
+            <router-link :to="'/orders/edit/' + order.id" v-if="order.status !== 'Đã giao'" class="btn btn-warning">Sửa</router-link>
+            <!-- <button @click="deleteOrder(order.id)" class="btn btn-danger">Xóa</button> -->
           </td>
         </tr>
       </tbody>
     </table>
+    <router-link to="/orders/add" class="btn btn-primary">Thêm đơn hàng</router-link>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
-export default {
-  name: "OrderList",
-  data() {
-    return {
-      orders: [],
-    };
-  },
-  created() {
-    this.fetchOrders();
-  },
-  methods: {
-    fetchOrders() {
-      axios.get("http://localhost:3000/orders").then((response) => {
-        this.orders = response.data;
-      });
-    },
-    deleteOrder(orderId) {
-      if (confirm("Bạn có chắc chắn muốn xóa đơn hàng này?")) {
-        axios.delete(`http://localhost:3000/orders/${orderId}`).then(() => {
-          this.fetchOrders();
-        });
-      }
-    },
-  },
+const orders = ref([]);
+
+const formatCurrency = (value) => {
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
 };
+
+
+// Lấy danh sách đơn hàng khi component được khởi tạo
+onMounted(async () => {
+  const response = await axios.get("http://localhost:3000/orders");
+  orders.value = response.data;
+});
+
+// Xóa một đơn hàng
+// const deleteOrder = async (id) => {
+//   try {
+//     await axios.delete(`http://localhost:3000/orders/${id}`);
+//     orders.value = orders.value.filter((order) => order.id !== id);
+//   } catch (error) {
+//     console.error("Không thể xóa đơn hàng:", error);
+//   }
+// };
 </script>

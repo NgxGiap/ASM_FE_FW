@@ -2,10 +2,28 @@
   <div class="container mt-4">
     <h1>Thêm đơn hàng</h1>
     <form @submit.prevent="addOrder">
+      <!-- Tên đơn hàng -->
+      <div class="mb-3">
+        <label for="orderName" class="form-label">Tên đơn hàng</label>
+        <input v-model="order.orderName" type="text" id="orderName" class="form-control" required />
+      </div>
+
       <!-- Tên khách hàng -->
       <div class="mb-3">
         <label for="customerName" class="form-label">Khách hàng</label>
         <input v-model="order.customerName" type="text" id="customerName" class="form-control" required />
+      </div>
+      
+      <!-- Địa chỉ -->
+      <div class="mb-3">
+        <label for="address" class="form-label">Địa chỉ</label>
+        <input v-model="order.address" type="text" id="address" class="form-control" required />
+      </div>
+      
+      <!-- Số điện thoại -->
+      <div class="mb-3">
+        <label for="phone" class="form-label">Số điện thoại</label>
+        <input v-model="order.phone" type="text" id="phone" class="form-control" required />
       </div>
 
       <!-- Ngày đặt hàng -->
@@ -19,7 +37,7 @@
         <label class="form-label">Sản phẩm</label>
         <div v-for="(product, index) in order.products" :key="index" class="row mb-2">
           <div class="col-3">
-            <select v-model="product.id" class="form-select" @change="updatePrice(product)">
+            <select v-model="product.id" class="form-select" @change="updateProductDetails(product)">
               <option value="" disabled>Chọn sản phẩm</option>
               <option v-for="prod in products" :key="prod.id" :value="prod.id">
                 {{ prod.name }}
@@ -37,12 +55,15 @@
             />
           </div>
           <div class="col-2">
-            <input v-model="product.price" type="text" class="form-control" placeholder="Đơn giá" readonly />
+            <input v-model="product.price" type="text" class="form-control" readonly />
           </div>
           <div class="col-2">
-            <input v-model="product.discount" type="number" class="form-control" placeholder="Giảm giá (%)" min="0" max="100" />
+            <input v-model="product.discount" type="text" class="form-control" readonly />
           </div>
           <div class="col-2">
+            <input v-model="product.unitTotal" type="text" class="form-control" readonly />
+          </div>
+          <div class="col-1">
             <button type="button" class="btn btn-danger" @click="removeProduct(index)">Xóa</button>
           </div>
         </div>
@@ -51,7 +72,7 @@
 
       <!-- Tổng tiền -->
       <div class="mb-3">
-        <label for="total" class="form-label">Tổng tiền sau giảm giá</label>
+        <label for="total" class="form-label">Tổng tiền</label>
         <input v-model="order.total" type="text" id="total" class="form-control" readonly />
       </div>
 
@@ -69,73 +90,86 @@
     </form>
   </div>
 </template>
-
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
-export default {
-  name: "OrderAdd",
-  data() {
-    return {
-      order: {
-        customerName: "",
-        orderDate: "",
-        products: [
-          { id: "", quantity: 1, price: 0, discount: 0 },
-        ],
-        total: 0,
-        status: "Chờ giao", // Mặc định trạng thái
-      },
-      products: [], // Danh sách sản phẩm từ API
-    };
-  },
-  created() {
-    // Lấy danh sách sản phẩm từ API
-    axios.get("http://localhost:3000/products").then((response) => {
-      this.products = response.data;
-    });
-  },
-  methods: {
-  addProductRow() {
-    // Thêm một dòng sản phẩm mới với các giá trị mặc định
-    this.order.products.push({ id: "", quantity: 1, price: 0, discount: 0 });
-  },
-  removeProduct(index) {
-    // Xóa dòng sản phẩm
-    this.order.products.splice(index, 1);
-    this.updateTotal();
-  },
-  updatePrice(product) {
-    // Cập nhật giá và giảm giá khi chọn sản phẩm
-    const selectedProduct = this.products.find((p) => p.id === product.id);
-    if (selectedProduct) {
-      product.price = selectedProduct.price;
-      product.discount = selectedProduct.discount || 0; // Lấy discount từ sản phẩm
-    } else {
-      product.price = 0;
-      product.discount = 0;
-    }
-    this.updateTotal();
-  },
-  updateTotal() {
-    // Tính tổng tiền sau khi áp dụng giảm giá
-    this.order.total = this.order.products.reduce((sum, product) => {
-      const discountedPrice = product.price - (product.price * product.discount) / 100;
-      return sum + product.quantity * discountedPrice;
-    }, 0);
-  },
-  addOrder() {
-    // Gửi đơn hàng đến API
-    axios
-      .post("http://localhost:3000/orders", this.order)
-      .then(() => {
-        this.$router.push("/orders");
-      })
-      .catch((error) => {
-        console.error("Không thể thêm đơn hàng:", error);
-      });
-  },
-},
+// Biến lưu danh sách sản phẩm từ API
+const products = ref([]);
 
+// Biến lưu thông tin đơn hàng
+const order = ref({
+  orderName: "",
+  customerName: "",
+  address: "",
+  phone: "",
+  orderDate: "",
+  products: [
+    { id: "", name: "", quantity: 1, price: 0, discount: 0, unitTotal: 0 },
+  ],
+  total: 0,
+  status: "Chờ giao", // Trạng thái mặc định
+});
+
+// Lấy danh sách sản phẩm khi component được mount
+onMounted(() => {
+  axios.get("http://localhost:3000/products").then((response) => {
+    products.value = response.data;
+  });
+});
+
+// Hàm thêm dòng sản phẩm
+const addProductRow = () => {
+  order.value.products.push({ id: "", name: "", quantity: 1, price: 0, discount: 0, unitTotal: 0 });
+};
+
+// Hàm xóa dòng sản phẩm
+const removeProduct = (index) => {
+  order.value.products.splice(index, 1);
+  updateTotal();
+};
+
+// Hàm cập nhật thông tin sản phẩm (tên, giá, giảm giá)
+const updateProductDetails = (product) => {
+  const selectedProduct = products.value.find((p) => p.id === product.id);
+  if (selectedProduct) {
+    product.name = selectedProduct.name;
+    product.price = selectedProduct.price;
+    product.discount = selectedProduct.discount;
+    product.unitTotal = calculateUnitTotal(product); // Cập nhật tổng tiền cho sản phẩm này
+  } else {
+    product.name = "";
+    product.price = 0;
+    product.discount = 0;
+    product.unitTotal = 0;
+  }
+  updateTotal();
+};
+
+// Hàm tính tổng tiền của từng sản phẩm
+const calculateUnitTotal = (product) => {
+  const finalPrice = product.price - (product.price * product.discount) / 100;
+  return finalPrice * product.quantity;
+};
+
+// Hàm tính tổng tiền đơn hàng
+const updateTotal = () => {
+  order.value.products.forEach((product) => {
+    product.unitTotal = calculateUnitTotal(product);
+  });
+  order.value.total = order.value.products.reduce((sum, product) => sum + product.unitTotal, 0);
+};
+
+// Hàm thêm đơn hàng
+const addOrder = () => {
+  axios
+    .post("http://localhost:3000/orders", order.value)
+    .then(() => {
+      alert("Thêm đơn hàng thành công!");
+      window.location.href = "/orders";
+    })
+    .catch((error) => {
+      console.error("Không thể thêm đơn hàng:", error);
+    });
 };
 </script>

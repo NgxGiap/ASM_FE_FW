@@ -2,32 +2,45 @@
   <div class="container mt-4">
     <h1>Thêm sản phẩm</h1>
     <form @submit.prevent="addProduct">
+      <!-- Tên sản phẩm -->
       <div class="mb-3">
-        <label class="form-label">Tên sản phẩm</label>
-        <input v-model="product.name" class="form-control" required />
+        <label for="name" class="form-label">Tên sản phẩm</label>
+        <input v-model="product.name" type="text" class="form-control" id="name" required />
       </div>
+
+      <!-- Mã sản phẩm -->
       <div class="mb-3">
-        <label class="form-label">Mã sản phẩm</label>
-        <input v-model="product.code" class="form-control" required />
+        <label for="code" class="form-label">Mã sản phẩm</label>
+        <input v-model="product.code" type="text" class="form-control" id="code" required />
       </div>
+
+      <!-- Giá -->
       <div class="mb-3">
-        <label class="form-label">Giá</label>
-        <input v-model.number="product.price" type="number" class="form-control" required />
+        <label for="price" class="form-label">Giá</label>
+        <input v-model="product.price" type="number" class="form-control" id="price" required />
       </div>
+
+      <!-- Mô tả -->
       <div class="mb-3">
-        <label class="form-label">Mô tả</label>
-        <textarea v-model="product.description" class="form-control" rows="3"></textarea>
+        <label for="description" class="form-label">Mô tả</label>
+        <textarea v-model="product.description" class="form-control" id="description" required></textarea>
       </div>
+
+      <!-- Hình ảnh -->
       <div class="mb-3">
-        <label class="form-label">Hình ảnh</label>
-        <input v-model="product.image" type="url" class="form-control" />
+        <label for="image" class="form-label">Hình ảnh</label>
+        <input v-model="product.image" type="text" class="form-control" id="image" required />
       </div>
-      <div class="form-check">
-        <input v-model="product.available" type="checkbox" class="form-check-input" />
-        <label class="form-check-label">Còn hàng</label>
+
+      <!-- Trạng thái có sẵn -->
+      <div class="form-check mb-3">
+        <input v-model="product.available" type="checkbox" class="form-check-input" id="available" />
+        <label class="form-check-label" for="available">Có sẵn</label>
       </div>
+
+      <!-- Danh mục -->
       <div class="mb-3">
-        <label for="category" class="form-label">Loại sản phẩm</label>
+        <label for="category" class="form-label">Danh mục</label>
         <select v-model="product.category" id="category" class="form-select" required>
           <option value="" disabled>Chọn loại sản phẩm</option>
           <option value="Điện tử">Điện tử</option>
@@ -36,7 +49,7 @@
         </select>
       </div>
       <div class="mb-3">
-        <label class="form-label">Tình trạng sản phẩm</label>
+        <label class="form-label">Tình trạng</label>
         <div>
           <div class="form-check">
             <input
@@ -60,44 +73,45 @@
           </div>
         </div>
       </div>
+
+      <!-- Giảm giá -->
       <div class="mb-3">
-      <label for="discount" class="form-label">Giảm giá (%)</label>
-      <input v-model="product.discount" type="number" class="form-control" id="discount" min="0" max="100" />
+        <label for="discount" class="form-label">Giảm giá (%)</label>
+        <input v-model="product.discount" type="number" class="form-control" id="discount" required min="0" max="100" />
       </div>
-      <button type="submit" class="btn btn-primary mt-3">Thêm sản phẩm</button>
+
+      <!-- Nút thêm sản phẩm -->
+      <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
     </form>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
 import axios from "axios";
 
-export default {
-  name: "ProductAdd",
-  data() {
-    return {
-      product: {
-        name: "",
-        code: "",
-        price: 0,
-        description: "",
-        image: "",
-        available: true,
-      },
-    };
-  },
-  methods: {
-    addProduct() {
-      axios
-        .post("http://localhost:3000/products", this.product)
-        .then(() => {
-          alert("Sản phẩm đã được thêm!");
-          this.$router.push("/products");
-        })
-        .catch((error) => {
-          console.error("Không thể thêm sản phẩm:", error);
-        });
-    },
-  },
+// Khai báo dữ liệu cho sản phẩm
+const product = ref({
+  name: "",
+  code: "",
+  price: 0,
+  description: "",
+  image: "",
+  available: false,
+  category: "",
+  condition: "",
+  discount: 0,
+});
+
+// Hàm thêm sản phẩm vào db
+const addProduct = async () => {
+  try {
+    // Gửi dữ liệu sản phẩm lên API
+    await axios.post("http://localhost:3000/products", product.value);
+    // Chuyển đến trang danh sách sản phẩm sau khi thêm
+    window.location.href = "/products";
+  } catch (error) {
+    console.error("Không thể thêm sản phẩm:", error);
+  }
 };
 </script>

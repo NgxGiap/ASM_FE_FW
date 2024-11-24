@@ -35,24 +35,104 @@
       "category": "Thời trang",
       "condition": "Mới",
       "discount": 5
-    },
-    {
-      "id": "0f81",
-      "name": "ghjhjg",
-      "code": "y6",
-      "price": 665,
-      "description": "gfytr",
-      "image": "https://cdn.discordapp.com/emojis/949577077273821234.webp?size=96",
-      "available": true,
-      "category": "Thời trang",
-      "condition": "Đã qua sử dụng",
-      "discount": 10
     }
   ],
   "orders": [
     {
+      "id": "4342",
+      "customerName": "LOG OWO",
+      "orderDate": "2024-11-24",
+      "products": [
+        {
+          "id": "8b82",
+          "name": "Tai nghe",
+          "quantity": 4,
+          "price": 50000,
+          "discount": 5,
+          "unitTotal": 190000
+        },
+        {
+          "id": "51f1",
+          "name": "Sản phẩm",
+          "quantity": 4,
+          "price": 15000,
+          "discount": 10,
+          "unitTotal": 54000
+        }
+      ],
+      "total": 244000,
+      "status": "Chờ giao",
+      "orderName": "edit",
+      "address": "ok",
+      "phone": "113"
+    },
+    {
       "id": "5043",
       "customerName": "Nguyễn Văn Giáp",
+      "orderDate": "2024-11-19",
+      "address": "123 Đường ABC, Quận 1, TP.HCM",
+      "phone": "0987654321",
+      "products": [
+        {
+          "id": "8b82",
+          "quantity": 4,
+          "price": 50000,
+          "discount": 5
+        }
+      ],
+      "total": 190000,
+      "status": "Chờ giao"
+    },
+    {
+      "id": "5d9b",
+      "customerName": "top 1 sẻver",
+      "orderDate": "2024-11-24",
+      "products": [
+        {
+          "id": "8b82",
+          "name": "Tai nghe",
+          "quantity": 1,
+          "price": 50000,
+          "discount": 5,
+          "unitTotal": 47500
+        },
+        {
+          "id": "51f1",
+          "name": "Sản phẩm",
+          "quantity": 4,
+          "price": 15000,
+          "discount": 10,
+          "unitTotal": 54000
+        }
+      ],
+      "total": 101500,
+      "status": "Đã giao"
+    },
+    {
+      "id": "4459",
+      "customerName": "Nguyễn Văn Giáp",
+      "address": "36",
+      "phone": "0867963647",
+      "orderDate": "2024-11-14",
+      "products": [
+        {
+          "id": "94b4",
+          "name": "Fish",
+          "quantity": 3,
+          "price": 5000,
+          "discount": 5,
+          "unitTotal": 14250
+        }
+      ],
+      "total": 14250,
+      "status": "Chờ giao"
+    },
+    {
+      "id": "5043",
+      "orderName": "Đơn hàng ngày 20/11",
+      "customerName": "Nguyễn Văn Giáp",
+      "address": "123 Đường ABC, Quận 1, TP.HCM",
+      "phone": "0987654321",
       "orderDate": "2024-11-19",
       "products": [
         {
@@ -66,70 +146,60 @@
       "status": "Chờ giao"
     },
     {
-      "id": "453f",
-      "customerName": "Gấu Cưỡi Xe 1",
-      "orderDate": "2024-11-19",
+      "id": "dd40",
+      "orderName": "Add New",
+      "customerName": "Nguyễn Văn Giáp",
+      "address": "37",
+      "phone": "0867963647",
+      "orderDate": "2024-11-24",
       "products": [
         {
           "id": "8b82",
-          "quantity": 2,
+          "name": "Tai nghe",
+          "quantity": 4,
           "price": 50000,
-          "discount": 5
-        }
-      ],
-      "total": 95000,
-      "status": "Chờ giao"
-    },
-    {
-      "id": "9278",
-      "customerName": "top 1 sẻver",
-      "orderDate": "2024-11-08",
-      "products": [
-        {
-          "id": "51f1",
-          "quantity": 3,
-          "price": 15000,
-          "discount": 10
-        }
-      ],
-      "total": 40500,
-      "status": "Chờ giao"
-    },
-    {
-      "id": "8b03",
-      "customerName": "Nguyễn Văn Giáp",
-      "orderDate": "2024-11-04",
-      "products": [
-        {
-          "id": "94b4",
-          "quantity": 2,
-          "price": 5000,
-          "discount": 5
-        }
-      ],
-      "total": 9500,
-      "status": "Chờ giao"
-    },
-    {
-      "id": "ca00",
-      "customerName": "Gấu Cưỡi Xe 1",
-      "orderDate": "2024-11-22",
-      "products": [
-        {
-          "id": "94b4",
-          "quantity": 3,
-          "price": 5000,
-          "discount": 5
+          "discount": 5,
+          "unitTotal": 190000
         },
         {
-          "id": "8b82",
+          "id": "94b4",
+          "name": "Fish",
           "quantity": 3,
-          "price": 50000,
-          "discount": 5
+          "price": 5000,
+          "discount": 5,
+          "unitTotal": 14250
         }
       ],
-      "total": 156750,
+      "total": 204250,
       "status": "Đã giao"
+    },
+    {
+      "id": "80a8",
+      "orderName": "Add New",
+      "customerName": "cbvbcb",
+      "address": "fdgfgdgdg",
+      "phone": "dfgdfgd",
+      "orderDate": "2024-11-24",
+      "products": [
+        {
+          "id": "8b82",
+          "name": "Tai nghe",
+          "quantity": 5,
+          "price": 50000,
+          "discount": 5,
+          "unitTotal": 237500
+        },
+        {
+          "id": "51f1",
+          "name": "Sản phẩm",
+          "quantity": 4,
+          "price": 15000,
+          "discount": 10,
+          "unitTotal": 54000
+        }
+      ],
+      "total": 291500,
+      "status": "Chờ giao"
     }
   ]
 }

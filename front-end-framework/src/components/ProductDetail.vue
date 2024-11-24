@@ -2,67 +2,41 @@
   <div class="container mt-4">
     <h1>Chi tiết sản phẩm</h1>
     <div v-if="product">
-      <div class="card" style="width: 18rem;">
-        <img :src="product.image" class="card-img-top" alt="Hình sản phẩm" />
-        <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">
-            <strong>Mã sản phẩm:</strong> {{ product.code }}
-          </p>
-          <p class="card-text">
-            <strong>Giá:</strong> {{ product.price.toLocaleString() }} VNĐ
-          </p>
-          <p class="card-text">
-            <strong>Mô tả:</strong> {{ product.description }}
-          </p>
-          <p class="card-text">
-            <strong>Trạng thái:</strong>
-            <span :class="product.available ? 'badge bg-success' : 'badge bg-danger'">
-              {{ product.available ? 'Còn hàng' : 'Hết hàng' }}
-            </span>
-          </p>
-          <p class="card-text">
-            <strong>Loại:</strong> {{ product.category }}
-          </p>
-          <p class="card-text">
-            <strong>Tình trạng:</strong> {{ product.condition }}
-          </p>
-          <router-link to="/products" class="btn btn-secondary">Quay lại</router-link>
-        </div>
-      </div>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Tên sản phẩm:</strong> {{ product.name }}</li>
+        <li class="list-group-item"><strong>Mã sản phẩm:</strong> {{ product.code }}</li>
+        <li class="list-group-item"><strong>Giá:</strong> {{ product.price }}</li>
+        <li class="list-group-item"><strong>Mô tả:</strong> {{ product.description }}</li>
+        <li class="list-group-item"><strong>Hình ảnh:</strong> <img :src="product.image" alt="Hình ảnh sản phẩm" width="150"></li>
+        <li class="list-group-item"><strong>Trạng thái:</strong> {{ product.available ? "Có sẵn" : "Hết hàng" }}</li>
+        <li class="list-group-item"><strong>Danh mục:</strong> {{ product.category }}</li>
+        <li class="list-group-item"><strong>Tình trạng:</strong> {{ product.condition }}</li>
+        <li class="list-group-item"><strong>Giảm giá:</strong> {{ product.discount }}%</li>
+      </ul>
+      <router-link to="/products" class="btn btn-secondary mt-3">Quay lại</router-link>
     </div>
     <div v-else>
-      <p class="text-danger">Không tìm thấy sản phẩm.</p>
-      <router-link to="/products" class="btn btn-secondary">Quay lại</router-link>
+      <p>Đang tải thông tin sản phẩm...</p>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRoute } from "vue-router";
 
-export default {
-  name: "ProductDetail",
-  data() {
-    return {
-      product: null,
-    };
-  },
-  methods: {
-    fetchProduct() {
-      const id = this.$route.params.id;
-      axios
-        .get(`http://localhost:3000/products/${id}`)
-        .then((response) => {
-          this.product = response.data;
-        })
-        .catch((error) => {
-          console.error("Không thể tải chi tiết sản phẩm:", error);
-        });
-    },
-  },
-  mounted() {
-    this.fetchProduct();
-  },
+const product = ref(null);
+const route = useRoute();
+
+const fetchProduct = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3000/products/${route.params.id}`);
+    product.value = response.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy thông tin sản phẩm:", error);
+  }
 };
+
+onMounted(fetchProduct);
 </script>
