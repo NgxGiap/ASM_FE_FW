@@ -27,6 +27,9 @@
                 >Đơn hàng</router-link
               >
             </li>
+            <li class="nav-item">
+              <router-link to="/customers" class="nav-link">Khách hàng</router-link>
+            </li>
           </ul>
         </div>
       </div>

@@ -146,40 +146,12 @@
       "status": "Chờ giao"
     },
     {
-      "id": "dd40",
-      "orderName": "Add New",
-      "customerName": "Nguyễn Văn Giáp",
-      "address": "37",
-      "phone": "0867963647",
-      "orderDate": "2024-11-24",
-      "products": [
-        {
-          "id": "8b82",
-          "name": "Tai nghe",
-          "quantity": 4,
-          "price": 50000,
-          "discount": 5,
-          "unitTotal": 190000
-        },
-        {
-          "id": "94b4",
-          "name": "Fish",
-          "quantity": 3,
-          "price": 5000,
-          "discount": 5,
-          "unitTotal": 14250
-        }
-      ],
-      "total": 204250,
-      "status": "Đã giao"
-    },
-    {
-      "id": "80a8",
-      "orderName": "Add New",
-      "customerName": "cbvbcb",
-      "address": "fdgfgdgdg",
-      "phone": "dfgdfgd",
-      "orderDate": "2024-11-24",
+      "id": "e87b",
+      "orderName": "",
+      "customerName": "Trần Thị B",
+      "address": "",
+      "phone": "",
+      "orderDate": "2024-11-26",
       "products": [
         {
           "id": "8b82",
@@ -192,14 +164,86 @@
         {
           "id": "51f1",
           "name": "Sản phẩm",
-          "quantity": 4,
+          "quantity": 3,
           "price": 15000,
           "discount": 10,
-          "unitTotal": 54000
+          "unitTotal": 40500
         }
       ],
-      "total": 291500,
+      "total": 278000,
+      "status": "Chờ giao",
+      "customerAddress": "456 Đường C, Quận D, TP. Hà Nội",
+      "customerPhone": "0987654321"
+    },
+    {
+      "id": "12f6",
+      "orderName": "new",
+      "customerName": "Nguyễn Văn A",
+      "address": "",
+      "phone": "",
+      "orderDate": "2024-11-12",
+      "products": [
+        {
+          "id": "8b82",
+          "name": "Tai nghe",
+          "quantity": 1,
+          "price": 50000,
+          "discount": 5,
+          "unitTotal": 47500
+        },
+        {
+          "id": "51f1",
+          "name": "Sản phẩm",
+          "quantity": 1,
+          "price": 15000,
+          "discount": 10,
+          "unitTotal": 13500
+        }
+      ],
+      "total": 61000,
+      "status": "Chờ giao",
+      "customerAddress": "123 Đường A, Quận B, TP. HCM",
+      "customerPhone": "0901234567"
+    },
+    {
+      "id": "00e1",
+      "orderName": "Add New",
+      "customerName": "Nguyễn Văn A",
+      "address": "123 Đường A, Quận B, TP. HCM",
+      "phone": "0901234567",
+      "orderDate": "2024-11-13",
+      "products": [
+        {
+          "id": "51f1",
+          "name": "Sản phẩm",
+          "quantity": 3,
+          "price": 15000,
+          "discount": 10,
+          "unitTotal": 40500
+        }
+      ],
+      "total": 40500,
       "status": "Chờ giao"
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "name": "Nguyễn Văn A",
+      "address": "123 Đường A, Quận B, TP. HCM",
+      "phone": "0901234567"
+    },
+    {
+      "id": "2",
+      "name": "Trần Thị B",
+      "address": "456 Đường C, Quận D, TP. Hà Nội",
+      "phone": "0987654321"
+    },
+    {
+      "id": "8f1f",
+      "name": "Nguyễn Văn Giáp",
+      "address": "36",
+      "phone": "0867963647"
     }
   ]
 }

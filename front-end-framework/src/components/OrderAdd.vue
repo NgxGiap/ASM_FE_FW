@@ -1,26 +1,39 @@
 <template>
-  <div class="container mt-4">
+<div class="container mt-4">
     <h1>Thêm đơn hàng</h1>
     <form @submit.prevent="addOrder">
+      <div class="mb-3">
+        <label for="customerType" class="form-label">Loại khách hàng</label>
+        <select v-model="customerType" id="customerType" class="form-select">
+          <option value="existing">Khách hàng</option>
+          <option value="new">Khách vãng lai</option>
+        </select>
+      </div>
+
+      <div v-if="customerType === 'existing'" class="mb-3">
+        <label for="customer" class="form-label">Chọn khách hàng</label>
+        <select v-model="selectedCustomerId" id="customer" class="form-select" @change="fillCustomerDetails">
+          <option value="">-- Chọn khách hàng --</option>
+          <option v-for="customer in customers" :key="customer.id" :value="customer.id">
+            {{ customer.name }}
+          </option>
+        </select>
+      </div>
+
       <!-- Tên đơn hàng -->
       <div class="mb-3">
         <label for="orderName" class="form-label">Tên đơn hàng</label>
         <input v-model="order.orderName" type="text" id="orderName" class="form-control" required />
       </div>
 
-      <!-- Tên khách hàng -->
-      <div class="mb-3">
-        <label for="customerName" class="form-label">Khách hàng</label>
+      <div v-if="customerType === 'new' || selectedCustomerId" class="mb-3">
+        <label for="customerName" class="form-label">Họ tên</label>
         <input v-model="order.customerName" type="text" id="customerName" class="form-control" required />
       </div>
-      
-      <!-- Địa chỉ -->
       <div class="mb-3">
         <label for="address" class="form-label">Địa chỉ</label>
         <input v-model="order.address" type="text" id="address" class="form-control" required />
       </div>
-      
-      <!-- Số điện thoại -->
       <div class="mb-3">
         <label for="phone" class="form-label">Số điện thoại</label>
         <input v-model="order.phone" type="text" id="phone" class="form-control" required />
@@ -96,6 +109,24 @@ import axios from "axios";
 
 // Biến lưu danh sách sản phẩm từ API
 const products = ref([]);
+const customerType = ref("existing");
+const selectedCustomerId = ref("");
+const customers = ref([]);
+
+const fetchCustomers = () => {
+  axios.get("http://localhost:3000/customers").then((response) => {
+    customers.value = response.data;
+  });
+};
+
+const fillCustomerDetails = () => {
+  const selectedCustomer = customers.value.find((c) => c.id === selectedCustomerId.value);
+  if (selectedCustomer) {
+    order.value.customerName = selectedCustomer.name;
+    order.value.address = selectedCustomer.address;
+    order.value.phone = selectedCustomer.phone;
+  }
+};
 
 // Biến lưu thông tin đơn hàng
 const order = ref({
@@ -112,6 +143,7 @@ const order = ref({
 });
 
 // Lấy danh sách sản phẩm khi component được mount
+onMounted(fetchCustomers);
 onMounted(() => {
   axios.get("http://localhost:3000/products").then((response) => {
     products.value = response.data;

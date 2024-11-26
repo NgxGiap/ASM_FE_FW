@@ -107,6 +107,8 @@ const order = ref({
   id: "",
   orderName: "",
   customerName: "",
+  phone: "",
+  address: "",
   orderDate: "",
   products: [
     { id: "", name: "", quantity: 1, price: 0, discount: 0, unitTotal: 0 },
