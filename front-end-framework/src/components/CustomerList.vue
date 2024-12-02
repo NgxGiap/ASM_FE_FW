@@ -2,7 +2,7 @@
     <div class="container mt-4">
       <h1>Danh sách khách hàng</h1>
       <table class="table table-striped">
-        <thead>
+        <thead class="table-dark">
           <tr>
             <th>#</th>
             <th>Họ tên</th>

@@ -28,14 +28,34 @@
           <td>{{ product.condition }}</td>
           <td>{{ product.discount }}%</td>
           <td>
-            <router-link :to="'/products/' + product.id" class="btn btn-info btn-sm">Xem</router-link>
-            <router-link :to="'/products/edit/' + product.id" class="btn btn-warning btn-sm">Sửa</router-link>
-            <button @click="deleteProduct(product.id)" class="btn btn-danger btn-sm">Xóa</button>
+            <router-link :to="'/products/' + product.id" class="btn btn-info btn-sm">
+              Xem
+            </router-link>
+            <router-link
+              v-if="isAuthorized"
+              :to="'/products/edit/' + product.id"
+              class="btn btn-warning btn-sm"
+            >
+              Sửa
+            </router-link>
+            <button
+              v-if="isAuthorized"
+              @click="deleteProduct(product.id)"
+              class="btn btn-danger btn-sm"
+            >
+              Xóa
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <router-link to="/products/add" class="btn btn-primary mt-3">Thêm sản phẩm</router-link>
+    <router-link
+      v-if="isAuthorized"
+      to="/products/add"
+      class="btn btn-primary mt-3"
+    >
+      Thêm sản phẩm
+    </router-link>
   </div>
 </template>
 
@@ -44,6 +64,8 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 
 const products = ref([]);
+const role = ref(localStorage.getItem("role"));
+const isAuthorized = ref(role.value === "admin" || role.value === "employee");
 
 const fetchProducts = async () => {
   try {

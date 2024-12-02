@@ -27,7 +27,7 @@
     {
       "id": "94b4",
       "name": "Fish",
-      "code": "F1",
+      "code": "F5",
       "price": 5000,
       "description": "Fish nè",
       "image": "https://cdn.discordapp.com/emojis/510023576892473364.webp?size=96&animated=true",
@@ -224,6 +224,42 @@
       ],
       "total": 40500,
       "status": "Chờ giao"
+    },
+    {
+      "id": "699d",
+      "orderName": "Add New",
+      "customerName": "Nguyễn Văn Giáp",
+      "address": "HN",
+      "phone": "0867963647",
+      "orderDate": "2024-12-02",
+      "products": [
+        {
+          "id": "8b82",
+          "name": "Tai nghe",
+          "quantity": 4,
+          "price": 50000,
+          "discount": 5,
+          "unitTotal": 190000
+        },
+        {
+          "id": "51f1",
+          "name": "Sản phẩm",
+          "quantity": 3,
+          "price": 15000,
+          "discount": 10,
+          "unitTotal": 40500
+        },
+        {
+          "id": "94b4",
+          "name": "Fish",
+          "quantity": 1,
+          "price": 5000,
+          "discount": 5,
+          "unitTotal": 4750
+        }
+      ],
+      "total": 235250,
+      "status": "Đã giao"
     }
   ],
   "customers": [
@@ -242,8 +278,22 @@
     {
       "id": "8f1f",
       "name": "Nguyễn Văn Giáp",
-      "address": "36",
+      "address": "HN",
       "phone": "0867963647"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "username": "employee",
+      "password": "123456",
+      "role": "employee"
     }
   ]
 }
